@@ -1,0 +1,7 @@
+
+sitename='Lo que saldra en el subject'
+
+sendfrom='mininagios@midominio.com'
+
+sendto=('primera@persona.com' 
+        'segunda@persoma.com')
