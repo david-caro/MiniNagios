@@ -1,0 +1,23 @@
+This is a set of little bash scripts used to monitor whatever you want and warn
+you if something changes (just like Nagios http://www.nagios.org/ does, but a 
+lot lot more simple).
+
+There is a main script mininagios2.sh that executes the checks and send the 
+notifications if needed.
+The emails to send the notifications to and some other otions are in the config 
+file.
+The scripts under checks will be executed buy the main script, they must use 
+those return values:
+
+0 - OK
+1 - ERROR
+2 - OTHER
+
+The main script will also capture the output and include it on the message body.
+
+The scripts under checks/aux are auxiliar scripts used by the ones at checks, 
+like port probes and process checking.
+
+
+It's on an early stage, I will create more check scripts and improve the ones 
+here as often as I'm able, all the help is appreciated.
