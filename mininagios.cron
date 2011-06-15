@@ -1,0 +1,2 @@
+#this file is intended to be put in /etc/cron.d
+*/5 * * * * root pathotomiminagios/mininagios.sh > /var/log/mininagios.log
