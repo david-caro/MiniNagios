@@ -1,0 +1,6 @@
+To install this script just put this folder anywhere (usr/local for example),
+edit the mininagios.cron file and replace the 'pathotomiminagios' string with 
+the path to the mininagios script, set the paermissions as needed and you are 
+done.
+
+Enjoy it!
