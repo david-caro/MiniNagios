@@ -10,7 +10,6 @@ usage()
 maxlimit=90
 
 error=0
-error_header="DISK ERROR: "
 disk=""
 percent=""
 
@@ -21,15 +20,18 @@ do
     if [ $percent -ge $maxlimit ]
     then
         error=1
+        error_msg+="Disk at $disk has $percent of the space filled (limit: $maxlimit)\n\t"
+    else
+        error_msg+="Disk at $disk has $percent of the space filled (limit: $maxlimit)\n\t"
     fi
-    error_msg="${error_msg}Disk at $disk has $percent of the space filled (limit: $maxlimit)\n\t"
 done
+
 if [ $error -eq 1 ]
 then
-    echo -e "$error_header$error_msg"
+    echo -e "DISK ERROR:\n\t$error_msg"
     exit 2
 else
-    echo -e "DISK OK: $error_msg"
+    echo -e "DISK OK:\n\t$error_msg"
 fi
 
 

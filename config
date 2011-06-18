@@ -1,7 +1,6 @@
-
-sitename='Lo que saldra en el subject'
+sitename='My site'
 
 sendfrom='mininagios@midominio.com'
 
-sendto=('primera@persona.com' 
-        'segunda@persoma.com')
+sendto=('first.to.warn@mydomain.com'
+        'second.to.warn@mydomain.com')

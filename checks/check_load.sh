@@ -6,24 +6,25 @@ usage()
     exit 2
 }
 
-### Config
-loadlimit=15
+## two decimal floating oint value
+loadlimit=15.00
 
 error=0
-error_msg="LOAD ERROR: "
+error_msg="LOAD ERROR: \n\t"
 
-load="$( cat /proc/loadavg | awk '{ print $2 }' | sed -e 's|\.||g' )"
-if [ $load -ge $loadlimit ]
+load="$( cat /proc/loadavg | awk '{ print $2 }' )"
+if [ ${load/.} -ge ${loadlimit/.} ]
 then
     error=1
-    error_msg="${error_msg}Load avg at $load (limit: $loadlimit)\n\t"
+    error_msg+="Load avg at $load (limit: $loadlimit)\n\t"
 fi
+
 if [ $error -eq 1 ]
 then
-    echo $error_msg
+    echo -e "$error_msg"
     exit 2
 else
-    echo "LOAD OK: Load average of $(echo $load | sed -e 's|\([[:digit:]][[:digit:]]$\)|.\1|')"
+    echo -e "LOAD OK: \n\tLoad average at $load (limit: $loadlimit)."
 fi
 
 
