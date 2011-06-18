@@ -42,7 +42,7 @@ then
     echo -e "$error_msg"
     exit 2
 else
-    echo "APACHE OK: Responding at port $apacheport and ${apache_proc#*: }"
+    echo "APACHE OK: Responding at port $apacheport and ${apache_procs#*: }"
 fi
 
 
