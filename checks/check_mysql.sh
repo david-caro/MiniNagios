@@ -12,7 +12,7 @@ maxprocs=20
 minprocs=1
 maxquerytime=30
 mysqluser="root"
-mysqlpass="root"
+mysqlpass="w4t3rm41l0n-DB"
 
 
 
@@ -47,7 +47,7 @@ fi
 ## check how much time the oldest query has been running
 [ $error -eq 0 ] && mysql_query_time="$(\
     mysql -p$mysqlpass -u$mysqluser -e "show full processlist;" 2>/dev/null 3>&2\
-    | grep -v sleep | grep -v "^Id" | awk '{ print $6 }' | sort -r \
+    | grep -iv sleep | grep -v "^Id" | awk '{ print $6 }' | sort -r \
     | head -n1 2>/dev/null 3>&2)"
 if [ $error -eq 0 ] && [ "$mysql_query_time" != "" ]
 then
@@ -55,6 +55,8 @@ then
     then
         error_msg+="There's at least one query with "
         error_msg+="more than $mysql_query_time seconds of execution time\n\t"
+        error_msg+="$(mysql -p$mysqlpass -u$mysqluser -e 'show full processlist;' 2>/dev/null 3>&2 \
+                    | grep -v sleep | grep -v "^Id" | awk '{ print $6,$0 }' | sort -r |head -n2)"
         error=1
     fi
 fi
