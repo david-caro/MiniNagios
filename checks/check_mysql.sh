@@ -12,7 +12,7 @@ maxprocs=20
 minprocs=1
 maxquerytime=30
 mysqluser="root"
-mysqlpass="w4t3rm41l0n-DB"
+mysqlpass="root"
 
 
 
