@@ -1,6 +1,42 @@
+###############################################################################
+###                                                                         ###
+### This is the main config file, where all the checks and the main script  ###
+### are configured, do not use multiline declarations nor ilegal bash       ###
+### variable declarations, do not use neither 
+[main]
+# For the notification email
 sitename='My site'
-
 sendfrom='mininagios@midominio.com'
+sendto=('first.to.warn@mydomain.com' 'second.to.warn@mydomain.com')
+# temporal dirs and files
+tmp_dir="/tmp"
+tmp_mailfile="$tmp_dir/mininagios_mailfile"
+tmp_errormsgfile="$tmp_dir/mininagios_lasterror"
+tmp_statusfile="$tmp_dir/mininagios_laststatus"
+tmp_laststatusmsg="$tmp_dir/mininagios_laststatusmsg"
 
-sendto=('first.to.warn@mydomain.com'
-        'second.to.warn@mydomain.com')
+
+
+[check_apache.sh]
+port=80
+host=localhost
+maxprocs=40
+minprocs=1
+
+
+[check_mysql.sh]
+host=localhost
+port=3306
+user=root
+pass=root
+maxprocs=2
+maxquerytime=2
+
+
+[check_disk.sh]
+maxlimit=90
+
+
+[check_load.sh]
+## two decimal float
+maxload=15.00

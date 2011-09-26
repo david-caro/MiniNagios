@@ -17,12 +17,11 @@ then
     usage
 fi
 
-port=$2
 host=$1
+port=$2
 
 salida="$(nc -z $host $port 2>&1 )"
-res=$?
-if [ $res -ne 0 ]
+if [ $? -ne 0 ]
 then
     if [ "$salida" == "" ]
     then 

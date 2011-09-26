@@ -1,18 +1,13 @@
 #!/bin/bash
 
-tmp_dir="/tmp"
-tmp_mailfile="$tmp_dir/mininagios_mailfile"
-tmp_errormsgfile="$tmp_dir/mininagios_lasterror"
-tmp_statusfile="$tmp_dir/mininagios_laststatus"
-
 homedir="$(dirname $0)"
+source $homedir/checks/aux/config_loader.sh
+load main $homedir/config
 
 error_msg=""
 error=0
 res=0
 send=0
-
-source ${0%/*}/config
 
 timestamp="$(date)"
 
@@ -104,20 +99,24 @@ execute_checks()
     return $error
 }
 
+[ "$1" == "status" ] \
+&& cat $tmp_laststatusmsg \
+&& exit 0
+
 ## execute_checks() : error
 execute_checks
 ## check_lasterror(error): send
 check_lasterror $?
 case $? in
     1)
-        echo "Error solved, sending mail"
+        echo "Error solved"
         error_msg="Errors solved, you can go to sleep now XD \n$error_msg"
         error_msg+="\n\nLast error_msg:$(cat $tmp_errormsgfile)"
         rm -f $tmp_errormsgfile &>/dev/null
         send_mail
         ;;
     2)
-        echo "New error, sending mail"
+        echo "New error"
         send_mail
         ;;
     3)
@@ -130,4 +129,6 @@ case $? in
             || echo "Everithing remains OK"
         ;;
 esac
+
+echo -e "$error_msg" > $tmp_laststatusmsg
 

@@ -6,8 +6,13 @@ usage()
     exit 2
 }
 
+
+pluginsdir="${0%/*}/aux"
+source $pluginsdir/config_loader.sh
+load ${0##*/}
+
 ## two decimal floating oint value
-loadlimit=15.00
+loadlimit=${loadlimit:=15.00}
 
 error=0
 error_msg="LOAD ERROR: \n\t"

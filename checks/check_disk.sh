@@ -6,8 +6,15 @@ usage()
     exit 2
 }
 
+
+
+
+pluginsdir="${0%/*}/aux"
+source $pluginsdir/config_loader.sh
+load ${0##*/}
+
 ### Config
-maxlimit=90
+maxlimit=${maxlimit:=90}
 
 error=0
 disk=""
@@ -20,9 +27,9 @@ do
     if [ $percent -ge $maxlimit ]
     then
         error=1
-        error_msg+="Disk at $disk has $percent of the space filled (limit: $maxlimit)\n\t"
+        error_msg+="Disk at $disk has $percent of the space used (limit: $maxlimit)\n\t"
     else
-        error_msg+="Disk at $disk has $percent of the space filled (limit: $maxlimit)\n\t"
+        error_msg+="Disk at $disk has $percent of the space used (limit: $maxlimit)\n\t"
     fi
 done
 

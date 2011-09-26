@@ -27,10 +27,11 @@
 function load 
 {
     section=${1:-default}
-    file=${2:-../config}
+    basedir=${0%/*/*}
+    file=${2:-$basedir/config}
+
 
     [ ! -f $file ] && echo "Config file '$file' not found!" && return 1
-    echo "Loading $section from $file."
 
     i=0 
     while read property
