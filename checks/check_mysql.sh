@@ -28,6 +28,7 @@ function run
         && ok_msg+="Responding at $host:$port\n\t" \
         || { error=1 && error_msg+="Can't connect to localhost $port\n\t"; }
 
+<<<<<<< HEAD
     [[ $maxprocs ]] && \
     {
         ## check how many mysql procs are running

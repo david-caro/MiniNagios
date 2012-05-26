@@ -115,7 +115,8 @@ case $? in
     1)
         echo "Error solved"
         error_msg="Errors solved, you can go to sleep now XD \n$error_msg"
-        error_msg+="\n\nLast error_msg:$(cat $tmp_errormsgfile)"
+        error_msg+="\n\n::::::::::::::::::::::Last error_msg:::::::::::::::"
+        error_msg+="$(cat $tmp_errormsgfile)"
         rm -f $tmp_errormsgfile &>/dev/null
         send_mail
         ;;

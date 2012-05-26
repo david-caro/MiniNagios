@@ -6,7 +6,6 @@ usage()
     exit 2
 }
 
-
 function run()
 {
     local host
