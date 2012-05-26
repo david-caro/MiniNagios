@@ -76,7 +76,7 @@ function run
     else
         echo -e "$ok_msg"
     fi
-} 
+}
 
 run
 

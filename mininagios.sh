@@ -1,6 +1,7 @@
 #!/bin/bash
 
 homedir="$(dirname $0)"
+
 source $homedir/checks/aux/config_loader.sh
 load main $homedir/config
 
@@ -11,28 +12,31 @@ send=0
 
 timestamp="$(date)"
 
-redir()
+redir() 
 {
    exec 4>&1-
    [ -f $tmp_mailfile ] && rm -f $tmp_mailfile &>/dev/null
    exec 1>>$1
 }
-unredir()
+
+unredir() 
 {
    exec 1>&4-
 }
 
 ## send_mail(error, error_msg)
-send_mail()
+send_mail() 
 {
     redir $tmp_mailfile
     to="${sendto[@]}"
     echo "From:$sendfrom" 
     echo "To:${to// /,}" 
     echo -n "Subject:"
-    [ $error -eq 0 ] \
-        && echo "$sitename OK" \
-        || echo "$sitename ERROR"
+    if [[ $error -eq 0 ]]; then
+        echo "$sitename OK"
+    else
+        echo "$sitename ERROR"
+    fi
     echo "" 
     echo "Report at date $timestamp:"
     echo -e "$error_msg"
@@ -45,26 +49,26 @@ send_mail()
 check_lasterror()
 {
     errorcode=$1
-    [ -f $tmp_errormsgfile ] \
+    [[ -f $tmp_errormsgfile ]] \
         && lasterror=1 \
         || lasterror=0
-    [ -f $tmp_statusfile ] \
+    [[ -f $tmp_statusfile ]] \
         && laststatus="$(head -n1 $tmp_statusfile | egrep -o '[[:digit:]]*' )" \
         || laststatus=0
     ## if there was an error before but there is no error now, send error solved
     ## email and reset status
-    if [ $lasterror -eq 1 ] && [ $errorcode -eq 0 ]; then
+    if [[ $lasterror -eq 1 ]] && [[ $errorcode -eq 0 ]]; then
         rm -f $tmp_statusfile &>/dev/null
         return 1
     ## but if there was no error before but there is one now, send new error 
     ## email
-    elif [ $lasterror -eq 0 ] && [ $errorcode -ge 1 ]; then
+    elif [[ $lasterror -eq 0 ]] && [[ $errorcode -ge 1 ]]; then
         echo "$error_msg" > $tmp_errormsgfile
         echo "$errorcode" > $tmp_statusfile
         return 2
     ## and if there was an error and the error changd, update the status and 
     ## send status change email
-    elif [ "$laststatus" != "$errorcode" ]; then
+    elif [[ "$laststatus" != "$errorcode" ]]; then
         echo "Status changed from $laststatus to $errorcode."
         echo "$errorcode" > $tmp_statusfile
         return 3
@@ -87,7 +91,7 @@ execute_checks()
     i=1
     for check in $(ls $homedir/checks/*.sh)
     do
-        if [ -x $check ]
+        if [[ -x $check ]]
         then
             error_msg="$error_msg\n\n"
             error_msg+="::::::::::::::::CHECK ${check##*/} :::::::::::::::\n"
